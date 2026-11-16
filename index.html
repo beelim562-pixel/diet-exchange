@@ -26,17 +26,26 @@
       padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,.18);
     }
-    header h1 { font-size: 18px; margin: 0 0 8px; font-weight: 700; }
-    .quota { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 8px; }
+    header h1 { font-size: 18px; margin: 0; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    header h1 button {
+      border: 0; background: rgba(255,255,255,.16); color: #fff; font-size: 13px; font-weight: 700;
+      border-radius: 999px; padding: 6px 10px; flex: 0 0 auto;
+    }
+    .quota { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin: 8px 0; }
     .quota b { display: block; font-size: 20px; line-height: 1.1; }
     .quota span { display: block; font-size: 11px; opacity: .85; }
     .quota div { background: rgba(255,255,255,.12); border-radius: 10px; padding: 8px 4px; text-align: center; }
+    .meals { display: flex; gap: 6px; margin: 0 0 8px; }
+    .meals div {
+      flex: 1; background: rgba(255,255,255,.12); border-radius: 10px; padding: 6px 4px; text-align: center; font-size: 12px;
+    }
+    .meals b { display: block; font-size: 13px; font-weight: 800; }
     .eq { font-size: 12px; opacity: .9; margin: 0 0 10px; }
     #q { width: 100%; border: 0; border-radius: 12px; padding: 12px 14px; font-size: 16px; background: #fff; color: #111; }
     nav {
       display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px 8px;
       -webkit-overflow-scrolling: touch; position: sticky;
-      top: calc(158px + env(safe-area-inset-top)); background: var(--bg); z-index: 15;
+      top: var(--header-h, 220px); background: var(--bg); z-index: 15;
     }
     nav button {
       flex: 0 0 auto; border: 0; background: #fff; color: var(--ink); border-radius: 999px;
@@ -91,26 +100,73 @@
     .ans .over { background: var(--red-soft); }
     .ans .over b { color: var(--red); }
     #calcHint { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+    .plan-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .plan-table th, .plan-table td { padding: 6px 4px; text-align: center; }
+    .plan-table th { font-size: 12px; color: var(--muted); }
+    .plan-table input {
+      width: 100%; max-width: 72px; margin: 0 auto; display: block;
+      border: 1px solid var(--line); border-radius: 10px; padding: 10px 6px;
+      font-size: 16px; text-align: center; background: #fff;
+    }
+    .ghost {
+      width: 100%; margin-top: 8px; border: 1px solid var(--line); background: #fff; color: var(--ink);
+      font-size: 15px; font-weight: 700; border-radius: 12px; padding: 12px;
+    }
+    .plan-total { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin-top: 10px; }
+    .plan-total div { background: var(--green-soft); border-radius: 10px; padding: 8px 4px; text-align: center; }
+    .plan-total b { display: block; font-size: 18px; color: var(--green); }
+    .plan-total span { font-size: 11px; color: var(--muted); }
+    .custom-flag { font-size: 12px; color: var(--gold); font-weight: 700; margin: 6px 0 0; }
     .hist { font-size: 13px; }
     .hist li { display: flex; justify-content: space-between; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+    .q5 { grid-template-columns: repeat(5,1fr); }
+    .quota b { font-size: 17px; }
+    .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+    .btns3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .btn {
+      border: 0; border-radius: 12px; padding: 12px; font-size: 15px; font-weight: 700;
+      background: #fff; color: var(--ink); box-shadow: 0 1px 0 var(--line);
+    }
+    .btn.pri { background: var(--green); color: #fff; }
+    .btn.ghost { background: var(--green-soft); color: var(--green); }
+    .btn.warn { background: var(--yellow-soft); color: var(--yellow); }
+    .btn.danger { background: var(--red-soft); color: var(--red); }
+    .meal { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin: 0 0 8px; }
+    .meal h3 { margin: 0 0 6px; font-size: 15px; }
+    .meal .bar { font-size: 13px; color: var(--muted); }
+    .chiprow { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 8px; }
+    .chip { flex: 0 0 auto; border: 0; border-radius: 999px; padding: 8px 12px; font-weight: 700; font-size: 13px; background: #fff; }
+    .chip.on { background: var(--green); color: #fff; }
+    .sheet {
+      position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 50;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .sheet-in {
+      background: var(--bg); width: 100%; max-height: 88vh; overflow: auto;
+      border-radius: 18px 18px 0 0; padding: 16px 16px calc(20px + env(safe-area-inset-bottom));
+    }
+    .logline { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .x { border: 0; background: var(--red-soft); color: var(--red); border-radius: 8px; padding: 4px 8px; font-weight: 700; }
+    .chk { display: flex; align-items: center; gap: 8px; font-size: 14px; margin: 6px 0; }
+    .rec { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin: 0 0 8px; }
+    .rec.g { border-color: #8fca9f; background: var(--green-soft); }
+    .rec.y { border-color: #e6c36a; background: var(--yellow-soft); }
   </style>
 </head>
 <body>
-  <header>
-    <h1>出街飲食速查</h1>
-    <div class="quota">
-      <div><b>3–4</b><span>五穀</span></div>
-      <div><b>3</b><span>蛋白質</span></div>
-      <div><b>3</b><span>水果</span></div>
-      <div><b>1</b><span>脂肪</span></div>
-    </div>
-    <p class="eq">1份五穀=15g　·　1份蛋白=7g　·　1份脂肪=5g</p>
+  <header id="topbar">
+    <h1>出街飲食速查 <button type="button" id="openPlan">改配額</button></h1>
+    <div class="quota" id="quotaBoxes"></div>
+    <div class="meals" id="mealBoxes"></div>
+    <p class="eq">1份五穀=15g　·　1份蛋白=7g　·　1份脂肪=5g　·　全日＝早+午+晚＋奶＋水果</p>
     <input id="q" type="search" placeholder="搜尋：叉燒、壽司、河粉、西冷…" autocomplete="off">
   </header>
 
   <nav id="tabs">
+    <button data-f="plan">配額</button>
+    <button class="on" data-f="today">今日</button>
     <button data-f="calc">計份量</button>
-    <button class="on" data-f="out">出街貼士</button>
+    <button data-f="out">出街貼士</button>
     <button data-f="cha">茶餐廳</button>
     <button data-f="cart">車仔麵</button>
     <button data-f="jp">日本</button>
@@ -137,9 +193,34 @@
 
   <main id="list">
 
+    <section data-cat="plan">
+      <h2>配額設定</h2>
+      <div class="note">預設：早 2C 1P 1F　午 4C 3P 1F　晚 3C 3P 1F，另加 1 份奶、3 份水果。可以改數字，只存呢部機。</div>
+      <div class="calc-card">
+        <table class="plan-table">
+          <thead>
+            <tr><th></th><th>五穀 C</th><th>蛋白 P</th><th>脂肪 F</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>早</th><td><input id="m0c" type="number" inputmode="decimal" min="0" step="any"></td><td><input id="m0p" type="number" inputmode="decimal" min="0" step="any"></td><td><input id="m0f" type="number" inputmode="decimal" min="0" step="any"></td></tr>
+            <tr><th>午</th><td><input id="m1c" type="number" inputmode="decimal" min="0" step="any"></td><td><input id="m1p" type="number" inputmode="decimal" min="0" step="any"></td><td><input id="m1f" type="number" inputmode="decimal" min="0" step="any"></td></tr>
+            <tr><th>晚</th><td><input id="m2c" type="number" inputmode="decimal" min="0" step="any"></td><td><input id="m2p" type="number" inputmode="decimal" min="0" step="any"></td><td><input id="m2f" type="number" inputmode="decimal" min="0" step="any"></td></tr>
+          </tbody>
+        </table>
+        <div class="row2">
+          <div><label>全日奶</label><input id="planDairy" type="number" inputmode="decimal" min="0" step="any"></div>
+          <div><label>全日水果</label><input id="planFruit" type="number" inputmode="decimal" min="0" step="any"></div>
+        </div>
+        <div class="plan-total" id="planTotal"></div>
+        <p class="custom-flag hidden" id="customFlag">而家用緊自訂數字，唔係預設。</p>
+        <button class="go" type="button" id="savePlan">用呢組數字</button>
+        <button class="ghost" type="button" id="resetPlan">還原預設</button>
+      </div>
+    </section>
+
     <section data-cat="calc">
       <h2>營養標籤 → 幾多份</h2>
-      <div class="note">1份五穀＝碳水 15g　·　1份蛋白＝7g　·　1份脂肪＝5g。有纖維就扣咗先再計五穀。跟每日配額：五穀 3–4、蛋白 3、脂肪 1。</div>
+      <div class="note">1份五穀＝碳水 15g　·　1份蛋白＝7g　·　1份脂肪＝5g。有纖維就扣咗先再計五穀。超唔超標跟上面全日配額（預設 9C 7P 3F）。</div>
       <div class="calc-card">
         <label>貼營養標籤文字（可選，會自動填下面數字）</label>
         <textarea id="labelPaste" placeholder="例如：&#10;碳水化合物 28g&#10;蛋白質 12g&#10;總脂肪 8g&#10;膳食纖維 3g"></textarea>
@@ -342,7 +423,7 @@
     </section>
 
     <section data-cat="grain">
-      <h2>五穀類 <small>每項＝1份 · 你而家 3–4 份</small></h2>
+      <h2>五穀類 <small id="grainCap">每項＝1份</small></h2>
       <div class="note">熟食以 250ml 碗計。手寫：生重 20g＝1份。</div>
       <div class="item" data-k="方包 白包 麥包"><div><div class="name">麥／白方包</div><div class="sub">生命麵包大小</div></div><div class="amt">1片</div></div>
       <div class="item" data-k="酸種 sourdough"><div><div class="name">酸種麵包</div></div><div class="amt">½片</div></div>
@@ -357,7 +438,7 @@
     </section>
 
     <section data-cat="pro">
-      <h2>蛋白質類 <small>每項＝1份 · 你而家 3 份</small></h2>
+      <h2>蛋白質類 <small id="proCap">每項＝1份</small></h2>
       <div class="item prefer" data-k="瘦豬肉 豬脷 柳梅 豬扒"><div><span class="tag ok">揀</span><div class="name">瘦豬肉</div><div class="sub">豬脷／柳梅／無骨豬扒　熟＝麻雀牌　生40g</div></div><div class="amt">1份</div></div>
       <div class="item" data-k="瘦牛肉 雞柳 雞胸 魚"><div><div class="name">瘦牛、雞柳／胸、魚背魚尾</div><div class="sub">魚 2平湯匙　避比目魚、銀鱈</div></div><div class="amt">麻雀牌／40g</div></div>
       <div class="item prefer" data-k="大蜆 花甲 螺 水浸吞拿魚"><div><span class="tag ok">揀</span><div class="name">大蜆／花甲／螺　·　水浸吞拿魚</div></div><div class="amt">7隻 / ½罐</div></div>
@@ -374,7 +455,7 @@
     </section>
 
     <section data-cat="fruit">
-      <h2>水果類 <small>每項＝1份 · 你而家 3 份</small></h2>
+      <h2>水果類 <small id="fruitCap">每項＝1份</small></h2>
       <div class="item" data-k="蘋果 橙 柑 蕉 奇異果 芒果 火龍果 梨 啤梨"><div><div class="name">常見生果</div><div class="sub">小蘋果／橙1個　蕉½條　奇異果1　芒果⅓　火龍果½　大梨½</div></div><div class="amt">1份</div></div>
       <div class="item" data-k="提子 車厘子 士多啤梨 藍莓 西瓜 木瓜 龍眼 荔枝"><div><div class="name">提子／漿果／瓜</div><div class="sub">小提子12／大6　車厘子10　士多8　西瓜木瓜1碗　龍眼荔枝8</div></div><div class="amt">1份</div></div>
       <div class="item prefer" data-k="牛油果"><div><span class="tag ok">可</span><div class="name">牛油果</div><div class="sub">¼個＝1水果+1脂肪</div></div><div class="amt">¼個</div></div>
@@ -382,13 +463,13 @@
     </section>
 
     <section data-cat="dairy">
-      <h2>奶類</h2>
+      <h2>奶類 <small id="dairyCap">全日配額</small></h2>
       <div class="item prefer" data-k="低脂芝士 加鈣無糖豆漿"><div><span class="tag ok">揀</span><div class="name">低脂芝士 1片　·　加鈣無糖豆漿 1杯</div></div><div class="amt">1份</div></div>
       <div class="item" data-k="脫脂奶 乳酪"><div><div class="name">脫脂奶 1杯　·　脫脂無糖乳酪 150g</div></div><div class="amt">1份</div></div>
     </section>
 
     <section data-cat="fat">
-      <h2>脂肪類 <small>你圈咗 1 份</small></h2>
+      <h2>脂肪類 <small id="fatCap">全日配額</small></h2>
       <div class="item prefer" data-k="奇亞籽"><div><span class="tag ok">*</span><div class="name">奇亞籽 2茶匙　·　植物油／麻油 1茶匙</div></div><div class="amt">1份</div></div>
       <div class="item avoid" data-k="花生 杏仁 腰果 合桃"><div><span class="tag no">避</span><div class="name">花生肉、杏仁、腰果、合桃</div><div class="sub">你打叉</div></div><div class="amt">暫避</div></div>
     </section>
@@ -408,14 +489,141 @@
     const empty = document.getElementById('empty');
     const tabs = document.getElementById('tabs');
     let filter = 'out';
+    const DEFAULT_PLAN = {
+      meals: [
+        { name: '早', c: 2, p: 1, f: 1 },
+        { name: '午', c: 4, p: 3, f: 1 },
+        { name: '晚', c: 3, p: 3, f: 1 }
+      ],
+      dairy: 1,
+      fruit: 3
+    };
+    const PLAN_KEY = 'dietPlan';
+    function clonePlan(src){
+      return JSON.parse(JSON.stringify(src));
+    }
+    function nOr(v, d){
+      const x = parseFloat(v);
+      return isFinite(x) ? x : d;
+    }
+    function loadPlan(){
+      try {
+        const s = JSON.parse(localStorage.getItem(PLAN_KEY) || 'null');
+        if (!s || !Array.isArray(s.meals) || s.meals.length !== 3) return clonePlan(DEFAULT_PLAN);
+        return {
+          meals: s.meals.map((m, i) => ({
+            name: DEFAULT_PLAN.meals[i].name,
+            c: nOr(m.c, DEFAULT_PLAN.meals[i].c),
+            p: nOr(m.p, DEFAULT_PLAN.meals[i].p),
+            f: nOr(m.f, DEFAULT_PLAN.meals[i].f)
+          })),
+          dairy: nOr(s.dairy, DEFAULT_PLAN.dairy),
+          fruit: nOr(s.fruit, DEFAULT_PLAN.fruit)
+        };
+      } catch (e) {
+        return clonePlan(DEFAULT_PLAN);
+      }
+    }
+    function totals(plan){
+      const t = { c: 0, p: 0, f: 0, dairy: plan.dairy, fruit: plan.fruit };
+      plan.meals.forEach(m => { t.c += m.c; t.p += m.p; t.f += m.f; });
+      return t;
+    }
+    function samePlan(a, b){
+      return JSON.stringify(a) === JSON.stringify(b);
+    }
+    let plan = loadPlan();
+    function fillPlanForm(){
+      plan.meals.forEach((m, i) => {
+        document.getElementById('m' + i + 'c').value = m.c;
+        document.getElementById('m' + i + 'p').value = m.p;
+        document.getElementById('m' + i + 'f').value = m.f;
+      });
+      document.getElementById('planDairy').value = plan.dairy;
+      document.getElementById('planFruit').value = plan.fruit;
+    }
+    function readPlanForm(){
+      return {
+        meals: [0,1,2].map(i => ({
+          name: DEFAULT_PLAN.meals[i].name,
+          c: nOr(document.getElementById('m' + i + 'c').value, 0),
+          p: nOr(document.getElementById('m' + i + 'p').value, 0),
+          f: nOr(document.getElementById('m' + i + 'f').value, 0)
+        })),
+        dairy: nOr(document.getElementById('planDairy').value, 0),
+        fruit: nOr(document.getElementById('planFruit').value, 0)
+      };
+    }
+    function renderQuota(){
+      const t = totals(plan);
+      document.getElementById('quotaBoxes').innerHTML =
+        '<div><b>' + t.c + '</b><span>五穀</span></div>' +
+        '<div><b>' + t.p + '</b><span>蛋白質</span></div>' +
+        '<div><b>' + t.f + '</b><span>脂肪</span></div>' +
+        '<div><b>' + t.dairy + '</b><span>奶</span></div>' +
+        '<div><b>' + t.fruit + '</b><span>水果</span></div>';
+      document.getElementById('mealBoxes').innerHTML = plan.meals.map(m =>
+        '<div><b>' + m.name + '</b>' + m.c + 'C ' + m.p + 'P ' + m.f + 'F</div>'
+      ).join('');
+      document.getElementById('planTotal').innerHTML =
+        '<div><b>' + t.c + '</b><span>全日五穀</span></div>' +
+        '<div><b>' + t.p + '</b><span>全日蛋白</span></div>' +
+        '<div><b>' + t.f + '</b><span>全日脂肪</span></div>' +
+        '<div><b>' + t.dairy + '</b><span>全日奶</span></div>' +
+        '<div><b>' + t.fruit + '</b><span>全日水果</span></div>';
+      document.getElementById('customFlag').classList.toggle('hidden', samePlan(plan, DEFAULT_PLAN));
+      document.getElementById('grainCap').textContent = '每項＝1份 · 全日 ' + t.c + ' 份';
+      document.getElementById('proCap').textContent = '每項＝1份 · 全日 ' + t.p + ' 份';
+      document.getElementById('fatCap').textContent = '全日 ' + t.f + ' 份';
+      document.getElementById('fruitCap').textContent = '每項＝1份 · 全日 ' + t.fruit + ' 份';
+      document.getElementById('dairyCap').textContent = '全日 ' + t.dairy + ' 份';
+      const h = document.getElementById('topbar').offsetHeight;
+      document.documentElement.style.setProperty('--header-h', h + 'px');
+    }
+    function savePlan(){
+      plan = readPlanForm();
+      localStorage.setItem(PLAN_KEY, JSON.stringify(plan));
+      renderQuota();
+    }
+    fillPlanForm();
+    renderQuota();
+    window.addEventListener('resize', renderQuota);
+    document.getElementById('savePlan').addEventListener('click', savePlan);
+    document.getElementById('resetPlan').addEventListener('click', () => {
+      plan = clonePlan(DEFAULT_PLAN);
+      localStorage.removeItem(PLAN_KEY);
+      fillPlanForm();
+      renderQuota();
+    });
+    ['m0c','m0p','m0f','m1c','m1p','m1f','m2c','m2p','m2f','planDairy','planFruit'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        document.getElementById('planTotal').innerHTML = (() => {
+          const draft = readPlanForm();
+          const t = totals(draft);
+          return '<div><b>' + t.c + '</b><span>全日五穀</span></div>' +
+            '<div><b>' + t.p + '</b><span>全日蛋白</span></div>' +
+            '<div><b>' + t.f + '</b><span>全日脂肪</span></div>' +
+            '<div><b>' + t.dairy + '</b><span>全日奶</span></div>' +
+            '<div><b>' + t.fruit + '</b><span>全日水果</span></div>';
+        })();
+      });
+    });
+    function goPlan(){
+      tabs.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+      tabs.querySelector('[data-f="plan"]').classList.add('on');
+      filter = 'plan';
+      apply();
+    }
+    document.getElementById('openPlan').addEventListener('click', goPlan);
+
     function norm(s){ return (s||'').toLowerCase().replace(/\s+/g,''); }
     function apply() {
       const term = norm(q.value);
       let shown = 0;
       document.querySelectorAll('main section').forEach(sec => {
         const cat = sec.dataset.cat;
-        if (cat === 'calc') {
-          const on = (filter==='calc' || filter==='all') && !term;
+        if (cat === 'calc' || cat === 'plan') {
+          const on = (filter===cat || filter==='all') && !term;
           sec.classList.toggle('hidden', !on);
           if (on) shown++;
           return;
@@ -515,16 +723,17 @@
       ag.querySelector('b').textContent = g;
       ap.querySelector('b').textContent = p;
       af.querySelector('b').textContent = f;
-      ag.classList.toggle('over', g > 4);
-      ap.classList.toggle('over', p > 3);
-      af.classList.toggle('over', f > 1);
+      const lim = totals(plan);
+      ag.classList.toggle('over', g > lim.c);
+      ap.classList.toggle('over', p > lim.p);
+      af.classList.toggle('over', f > lim.f);
       const bits = [];
       bits.push('淨碳水 ' + round1(netCarb * mult) + 'g ÷ 15');
       bits.push('蛋白 ' + round1(pro * mult) + 'g ÷ 7');
       bits.push('脂肪 ' + round1(fat * mult) + 'g ÷ 5');
-      if (g > 4) bits.push('五穀超過今日 3–4 份');
-      if (p > 3) bits.push('蛋白超過今日 3 份');
-      if (f > 1) bits.push('脂肪超過今日 1 份');
+      if (g > lim.c) bits.push('五穀超過今日 ' + lim.c + ' 份');
+      if (p > lim.p) bits.push('蛋白超過今日 ' + lim.p + ' 份');
+      if (f > lim.f) bits.push('脂肪超過今日 ' + lim.f + ' 份');
       document.getElementById('calcHint').textContent = bits.join('　·　');
       const name = document.getElementById('foodName').value.trim() || '無名稱';
       const row = name + '｜' + g + '五穀 ' + p + '蛋白 ' + f + '脂肪';
